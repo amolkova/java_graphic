@@ -43,6 +43,7 @@ public class MyFrame extends JFrame {
         JButton buttonSplit = new JButton(":");
         JButton buttonEquals = new JButton("=");
         JButton buttonCleanTextField = new JButton("CE");
+        JButton buttonPoint = new JButton(".");
         buttonZero.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,6 +93,13 @@ public class MyFrame extends JFrame {
             }
         });
 
+        buttonPoint.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                action(e);
+            }
+        });
+        
         jPanel.add(buttonZero);
         jPanel.add(buttonPlus);
         jPanel.add(buttonMinus);
@@ -99,6 +107,7 @@ public class MyFrame extends JFrame {
         jPanel.add(buttonSplit);
         jPanel.add(buttonEquals);
         jPanel.add(buttonCleanTextField);
+        jPanel.add(buttonPoint);
         add(jPanel);
     }
 
