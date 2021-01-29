@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class MyFrame extends JFrame {
     private final JTextField textField;
     private char operation;
-    private double total;
+    
     private boolean isFirstDigit;
 
     public MyFrame() {
@@ -16,9 +16,7 @@ public class MyFrame extends JFrame {
         setBounds(300, 300, 170, 300);
         setVisible(true);
         isFirstDigit = true;
-
-        total = 0;
-
+        
         JPanel jPanel = new JPanel();
 
         textField = new JTextField(12);
@@ -114,29 +112,34 @@ public class MyFrame extends JFrame {
      * @param e
      */
     private void calculating(ActionEvent e) {
+    	double total = 0;
         String text = textField.getText();
         String digit = "";
         for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            if (c == '-' || c == '+') {
+            char letter = text.charAt(i);
+            if (letter == '-' || letter == '+' || letter == '*' || letter == ':') {
                 double currentValue = Double.parseDouble(digit);
                 if (isFirstDigit) {
-                    total += currentValue;
+                    total = currentValue;
                     isFirstDigit = false;
                 } else {
                     if (operation == '-') {
                         total -= currentValue;
                     } else if (operation == '+') {
                         total += currentValue;
+                    } else if (operation == '*') {
+                    	total = total * currentValue;
+                    } else if (operation == ':') {
+                    	total = total / currentValue;
                     }
                 }
 
                 digit = "";
-                operation = c;
+                operation = letter;
                 continue;
             }
 
-            digit += c;
+            digit += letter;
         }
 
         double currentValue = Double.parseDouble(digit);
@@ -144,7 +147,12 @@ public class MyFrame extends JFrame {
             total -= currentValue;
         } else if (operation == '+') {
             total += currentValue;
+        } else if (operation == '*') {
+        	total = total * currentValue;
+        } else if (operation == ':') {
+        	total = total / currentValue;
         }
+
 
         isFirstDigit = true;
         textField.setText(String.valueOf(total));
