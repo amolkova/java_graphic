@@ -1,13 +1,16 @@
 package frame;
 
 import javax.swing.*;
+
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MyFrame extends JFrame {
     private final JTextField textField;
     private char operation;
-    
+    private ArrayList<Character> operationList;
     private boolean isFirstDigit;
 
     public MyFrame() {
@@ -16,6 +19,12 @@ public class MyFrame extends JFrame {
         setBounds(300, 300, 170, 300);
         setVisible(true);
         isFirstDigit = true;
+        
+        operationList = new ArrayList<Character>();        
+        operationList.add('+');
+        operationList.add('-');
+        operationList.add('*');
+        operationList.add(':');
         
         JPanel jPanel = new JPanel();
 
@@ -124,9 +133,11 @@ public class MyFrame extends JFrame {
     	double total = 0;
         String text = textField.getText();
         String digit = "";
+       
+               
         for (int i = 0; i < text.length(); i++) {
             char letter = text.charAt(i);
-            if (letter == '-' || letter == '+' || letter == '*' || letter == ':') {
+            if (operationList.contains(letter)) {
                 double currentValue = Double.parseDouble(digit);
                 if (isFirstDigit) {
                     total = currentValue;
@@ -169,7 +180,22 @@ public class MyFrame extends JFrame {
     }
 
     public void action(ActionEvent event) {
-        textField.setText(textField.getText() + event.getActionCommand());
+    	char currentOperant = event.getActionCommand().charAt(0);
+    	char [] oldTextArray = textField.getText().toCharArray();
+    	
+    	
+    	if (operationList.contains(currentOperant) &&  operationList.contains(oldTextArray [oldTextArray.length - 1]) ) {
+    		
+    		oldTextArray [oldTextArray.length - 1] = currentOperant;
+    		textField.setText(String.valueOf(oldTextArray));
+    		  		    		
+    	} else {
+    		textField.setText(textField.getText() + event.getActionCommand());
+    	}
+    	
+    	
+    	
+        
     }
     
     public void deleteAction(ActionEvent event) {
